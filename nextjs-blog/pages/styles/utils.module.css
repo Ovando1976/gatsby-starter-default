@@ -1,0 +1,66 @@
+/* utils.module.css */
+
+/* Margins */
+.mt-10 {
+    margin-block-start: 10px;
+}
+
+.mr-10 {
+    margin-inline-end: 10px;
+}
+
+.mb-10 {
+    margin-block-end: 10px;
+}
+
+.ml-10 {
+    margin-inline-start: 10px;
+}
+
+/* Padding */
+.pt-10 {
+    padding-block-start: 10px;
+}
+
+.pr-10 {
+    padding-inline-end: 10px;
+}
+
+.pb-10 {
+    padding-block-end: 10px;
+}
+
+.pl-10 {
+    padding-inline-start: 10px;
+}
+
+/* Text alignment */
+.text-center {
+    text-align: center;
+}
+
+.text-left {
+    text-align: start;
+}
+
+.text-right {
+    text-align: end;
+}
+
+/* Font styles */
+.bold {
+    font-weight: bold;
+}
+
+.italic {
+    font-style: italic;
+}
+
+/* Colors */
+.text-primary {
+    color: #0070f3;
+}
+
+.text-secondary {
+    color: #888888;
+}
