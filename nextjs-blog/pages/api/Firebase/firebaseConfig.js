@@ -1,9 +1,8 @@
 import { initializeApp, getApp, getApps } from "firebase/app";
-import { getFirestore, collection, getDocs } from 'firebase/firestore/lite';
+import { getFirestore} from 'firebase/firestore/lite';
 import { getAuth } from "firebase/auth";
 import { getDatabase } from "firebase/database";
 import { getStorage } from "firebase/storage";
-import { getAnalytics } from "firebase/analytics";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -36,11 +35,6 @@ const db = getDatabase(app);
 const firestore = getFirestore(app);
 const storage = getStorage(app);
 // Get a list of cities from your database
-async function getCities(db) {
-  const citiesCol = collection(db, 'cities');
-  const citySnapshot = await getDocs(citiesCol);
-  const cityList = citySnapshot.docs.map(doc => doc.data());
-  return cityList;
-}
+
 
 export { app, auth, db, firestore, storage, firebaseConfig };

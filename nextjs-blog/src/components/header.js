@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/router';
-import  Link from 'next/link'; 
+import Link from 'next/link'; 
 import { IconNextChat } from './ui/icons';
-import { getCurrentUser } from '../../auth';
-import  ThemeToggle  from './theme-toggle';
+import { getCurrentUser, signOutUser } from '../../auth';
+import ThemeToggle from './theme-toggle';
 import { ClearHistory } from './clear-history';
 import styles from './header.module.css';
 
@@ -20,6 +20,33 @@ const useClickOutside = (ref, callback) => {
     };
   }, [ref, callback]);
 };
+
+const LinkItem = ({ path, label }) => (
+  <Link key={path} href={path} className={styles.link}>
+    {label}
+  </Link>
+);
+
+const Dropdown = ({ isDropdownOpen, router }) => (
+  <div style={{
+    position: 'absolute',
+    insetBlockStart: '100%',
+    insetInlineStart: 0,
+    border: '1px solid #ddd',
+    backgroundColor: 'white'
+  }}>
+    <div onClick={() => router.push("/profile")} className={styles.link}>Profile</div>
+    <div onClick={() => router.push("/settings")} className={styles.link}>Settings</div>
+    <div className={styles.link} onClick={async () => {
+      try {
+        await signOutUser();
+        console.log("User logged out!");
+      } catch (error) {
+        console.error('Error signing out:', error);
+      }
+    }}>Logout</div>
+  </div>
+);
 
 const Header = () => {
   const router = useRouter();
@@ -49,11 +76,7 @@ const Header = () => {
 
   return (
     <header className={styles.navbar}>
-      {Links.map((link) => (
-        <Link key={link.path} to={link.path} className={styles.link}>
-          {link.label}
-        </Link>
-      ))}
+      {Links.map(link => <LinkItem {...link} />)}
 
       {session?.user ? (
         <>
@@ -63,23 +86,7 @@ const Header = () => {
             ref={dropdownRef}
           >
             User
-            {isDropdownOpen && (
-              <div style={{
-                position: 'absolute',
-                insetBlockStart: '100%',
-                insetInlineStart: 0,
-                border: '1px solid #ddd',
-                backgroundColor: 'white'
-              }}>
-                {/* Dropdown links */}
-                <div onClick={() => router.push("/profile")} className={styles.link}>Profile</div>
-                <div onClick={() => router.push("/settings")} className={styles.link}>Settings</div>
-                <div className={styles.link} onClick={() => {
-                  console.log("User logged out!");
-                  // Your logout logic here...
-                }}>Logout</div>
-              </div>
-            )}
+            {isDropdownOpen && <Dropdown isDropdownOpen={isDropdownOpen} router={router} />}
           </div>
           <ThemeToggle />
           <ClearHistory />
@@ -94,9 +101,4 @@ const Header = () => {
   );
 };
 
-export default (Header);
-
-
-
-
-
+export default Header;

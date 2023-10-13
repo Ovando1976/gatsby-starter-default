@@ -3,12 +3,7 @@ import Head from 'next/head';
 import styles from './styles/blog.module.css';
 import { getFirestore, collection, getDocs } from 'firebase/firestore';
 import { app } from './api/Firebase/firebaseConfig';
-import dynamic from 'next/dynamic';
 
-const FirebaseAdmin = dynamic(
-    () => import('./api/Firebase/firebaseConfig'),
-    { ssr: true, loading: () => <p>Loading...</p> }
-);
 
 
 

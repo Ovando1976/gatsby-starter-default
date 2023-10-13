@@ -2,12 +2,7 @@ import React, { useState } from 'react';
 import { getFirestore, serverTimestamp } from 'firebase/firestore';
 import { getAuth } from 'firebase/auth';
 import { app } from './api/Firebase/firebaseConfig';
-import dynamic from 'next/dynamic';
 
-const FirebaseAdmin = dynamic(
-    () => import('./api/Firebase/firebaseConfig'),
-    { ssr: true, loading: () => <p>Loading...</p> }
-);
 
 
 

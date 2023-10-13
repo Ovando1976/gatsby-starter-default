@@ -1,4 +1,4 @@
-import { addDoc, collection } from 'firebase/firestore';
+import { addDoc, collection, doc, getDoc, updateDoc } from 'firebase/firestore';
 import { getFirestore } from 'firebase/firestore';
 import { getFunctions, httpsCallable } from 'firebase/functions';
 
@@ -23,11 +23,10 @@ export const storeMessage = async (sessionId, message, sentBy) => {
   }
 }
 
-
 // Function to add a document to a Firestore collection
 export const addDocumentToCollection = async (collectionName, documentData) => {
   try {
-    const docRef = await db.collection(collectionName).add(documentData);
+    const docRef = await addDoc(collection(db, collectionName), documentData);
     return docRef.id;
   } catch (error) {
     console.error('Error adding document:', error);
@@ -38,10 +37,10 @@ export const addDocumentToCollection = async (collectionName, documentData) => {
 // Function to fetch a document from a Firestore collection
 export const fetchDocumentFromCollection = async (collectionName, documentId) => {
   try {
-    const docRef = db.collection(collectionName).doc(documentId);
-    const doc = await docRef.get();
-    if (doc.exists) {
-      return doc.data();
+    const docRef = doc(db, collectionName, documentId);
+    const docSnap = await getDoc(docRef);
+    if (docSnap.exists()) {
+      return docSnap.data();
     } else {
       throw new Error('Document not found');
     }
@@ -54,8 +53,8 @@ export const fetchDocumentFromCollection = async (collectionName, documentId) =>
 // Function to update a document in a Firestore collection
 export const updateDocumentInCollection = async (collectionName, documentId, updatedData) => {
   try {
-    const docRef = db.collection(collectionName).doc(documentId);
-    await docRef.update(updatedData);
+    const docRef = doc(db, collectionName, documentId);
+    await updateDoc(docRef, updatedData);
   } catch (error) {
     console.error('Error updating document:', error);
     throw error;
@@ -73,3 +72,8 @@ export const callFirebaseFunction = async (functionName, data) => {
     throw error;
   }
 };
+
+
+
+
+

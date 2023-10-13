@@ -1,3 +1,4 @@
+import React from 'react';
 import Link from 'next/link';
 import Head from 'next/head';
 import Header from '../src/components/header';   
@@ -14,9 +15,17 @@ import SidebarList from '../src/components/sidebar-list';
 import Chat from '../src/components/Chat';  
 import Layout from '../layouts';  
 
+import fs from 'fs';
+import path from 'path';
 import Styles from './styles/utils.module.css';
 
+const postsDirectory = path.join(process.cwd(), 'posts');
+
 export async function getStaticProps() {
+  if (!fs.existsSync(postsDirectory)) {
+    console.error(`Directory ${postsDirectory} does not exist!`);
+    return { props: { allPostsData: [] } };
+  }
   const allPostsData = getSortedPostsData();
   return {
     props: {
@@ -25,16 +34,15 @@ export async function getStaticProps() {
   };
 }
 
-export default function Home ({ allPostsData }) { 
-    const isAuthenticated = true;  
-    const userName = "John"; 
+export default function Home({ allPostsData }) {
+  const isAuthenticated = true;
+  const userName = 'John';
 
-    return (
-     
-      <Provider store={store}>
-         <Layout home>
+  return (
+    <Provider store={store}>
+      <Layout home>
         <div className={styles.container}>
-            <Head>
+          <Head>
                 <title>USVIexplorer Dashboard</title>
                 <meta charSet="UTF-8" />
                 <meta name="description" content="USVIexplorer Dashboard" />
@@ -75,19 +83,20 @@ export default function Home ({ allPostsData }) {
 
                     {/* User Settings and Preferences */}
                     {isAuthenticated && <UserSettings />}
-        </div>
+                 </div>
 
-                <div className={styles.linksContainer}>
-                    <Link href="/user">User Profile</Link>
-                    <Link href="/blog">Blog</Link>
-                    <Link href="/groups">Groups</Link>
-                    <Link href="/events">Events</Link>
-                    <Link href="/booking">Booking</Link>
-                    <Link href="/expenses">Expenses</Link>
-                    <Link href="/register">Registration</Link>
-                    <Link href="/dashboard">Dashboard</Link>
-                    <Link href="/driverProfile">Driver Profile</Link>
-                </div>
+                 <div className={styles.linksContainer}>
+                 <Link href="/user">User Profile</Link>
+                 <Link href="/blog">Blog</Link>
+                 <Link href="/groups">Groups</Link>
+                 <Link href="/events">Events</Link>
+                 <Link href="/booking">Booking</Link>
+                 <Link href="/expenses">Expenses</Link>
+                 <Link href="/register">Registration</Link>
+                 <Link href="/dashboard">Dashboard</Link>
+                 <Link href="/driverProfile">Driver Profile</Link>
+                 </div>
+
 
                 <p className={styles.description}>
                     {!isAuthenticated ? (
@@ -105,27 +114,27 @@ export default function Home ({ allPostsData }) {
                 </p>
             </main>
             </div>
-        <section className={`${Styles.headingMd} ${Styles.padding1px}`}>
-          <h2 className={Styles.headingLg}>Blog</h2>
-          <ul className={Styles.list}>
-            {allPostsData.map(({ id, date, title }) => (
-              <li className={Styles.listItem} key={id}>
-                {title}
-                <br />
-                {id}
-                <br />
-                {date}
-              </li>
-            ))}
-          </ul>
-        </section>
+            <section className={`${Styles.headingMd} ${Styles.padding1px}`}>
+            <h2 className={Styles.headingLg}>Blog</h2>
+            <ul className={Styles.list}>
+              {allPostsData.map(({ id, date, title }) => (
+                <li className={Styles.listItem} key={id}>
+                  {title}
+                  <br />
+                  {id}
+                  <br />
+                  {date}
+                </li>
+              ))}
+            </ul>
+          </section>
 
-       </Layout>
-            <footer className={styles.footer}>
-                <p>&copy; 2023 USVIexplorer. All rights reserved.</p>
-                <Link href="/terms">Terms & Conditions</Link>
-                <Link href="/privacy">Privacy Policy</Link>
-                </footer>
+        </Layout>
+        <footer className={styles.footer}>
+          <p>&copy; 2023 USVIexplorer. All rights reserved.</p>
+          <Link href="/terms">Terms & Conditions</Link>
+          <Link href="/privacy">Privacy Policy</Link>
+        </footer>
       </Provider>
     );
 }
