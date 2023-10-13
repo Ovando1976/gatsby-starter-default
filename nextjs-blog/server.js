@@ -5,12 +5,10 @@ const cors = require('cors');
 const OpenAI = require('openai');
 
 const app = express();
-const port = process.env.PORT || 8080; // Use the provided PORT or default to 8080
+const port = process.env.PORT || 8080;  // Use the provided PORT or default to 8080
 
+// Single instance of cors middleware with the common configuration
 app.use(cors());
-app.use(cors({
-  origin: "https://api.openai.com/v1/chat/completions"
-}));
 
 app.use(express.json());
 
@@ -21,8 +19,6 @@ const openai = new OpenAI({
 // Serve static files from the 'client/build' directory
 app.use(express.static(path.join(__dirname, './build')));
 
-
-
 // Handle POST requests for completions
 app.post('/completions', async (req, res) => {
   const prompt = req.body.prompt;
@@ -30,7 +26,7 @@ app.post('/completions', async (req, res) => {
 
   try {
     const openAIResponse = await openai.complete({
-      model: "GPT-4",  // You can specify your model here, I'm using "text-davinci-002" as an example
+      model: "text-davinci-002",  // Corrected model name
       prompt: prompt,
       max_tokens: maxTokens,
     });
@@ -41,17 +37,15 @@ app.post('/completions', async (req, res) => {
   }
 });
 
-const chatRoutes = require('./src/routes/api/openai');
-app.use(chatRoutes);
+const chatRoutes = require('./pages/api/openai');
+app.use('/openai', chatRoutes);  // Specified a base path for chatRoutes
 
 // Handle all other routes by serving the React application
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, './build/index.html'));
-
 });
 
 console.log('API Key from .env:', process.env.OPENAI_API_KEY);
-
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);

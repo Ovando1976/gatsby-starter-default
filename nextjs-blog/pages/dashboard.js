@@ -47,23 +47,22 @@ function Dashboard() {
           <Link href="/driverprofile">Driver Profile</Link>
         </div>
 
-        <section className={styles.infoSection}>
+        <nav className={styles.linksContainer}>
           <h2>Information</h2>
           <p>If you're not logged in, please proceed to the login page.</p>
           <Link href="/login">
             <button className={styles.loginBtn}>Login</button>
           </Link>
-        </section>
-        <div className={styles.container}>
-            {/* Other components and content */}
-            <div className={styles.cardsContainer}>
-                {pagesData.map((page, index) => (
-                    <FloatingCard key={index} {...page} />
-                ))}
-            </div>
-        </div>
-
-        </main>
+        </nav>
+        <div className={styles.cardsContainer}>
+            {pagesData.map((page) => (
+              <FloatingCard key={page.title} {...page} />
+            ))}
+          </div>
+        ) : (
+          <p className={styles.error}>No pages available at the moment.</p>
+        )
+      </main>
 
       <footer className={styles.footer}>
         <p>&copy; {new Date().getFullYear()} USVIexplorer. All rights reserved.</p>

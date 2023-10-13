@@ -53,6 +53,7 @@
     "@adobe/css-tools": "^4.3.1"
   },
   "scripts": {
+    "backend": "node server.js",
     "start": "next start",
     "dev": "next dev",
     "build": "next build",

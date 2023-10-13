@@ -2,14 +2,6 @@
 import styles from './styles/events.module.css';
 import { getFirestore, collection, getDocs } from 'firebase/firestore';
 import { app } from './api/Firebase/firebaseConfig';
-import dynamic from 'next/dynamic';
-
-const FirebaseAdmin = dynamic(
-    () => import('./api/Firebase/firebaseConfig'),
-    { ssr: true, loading: () => <p>Loading...</p> }
-);
-
-// Use `FirebaseAdmin` in your component to access the admin functionalities.
 
 
 

@@ -1,7 +1,7 @@
 'use client';
 
-import { Button } from './ui/button'
-import  Input  from './ui/input'
+import { Button } from './ui/button';
+import Input from './ui/input';
 import React, { useState, useEffect } from 'react'; 
 import { ref, onValue, off, getDatabase } from 'firebase/database'; 
 
@@ -37,43 +37,47 @@ export const useChatMessages = (sessionId) => {
 };
 
 const ChatComponent = ({ sessionId }) => {
-  const [input, setInput] = useState(''); // Message input state
+  const [input, setInput] = useState(''); 
   const { messages, addMessage } = useChatMessages(sessionId);
   const [user] = useState(null); 
-  const [responseMessage, setResponseMessage] = useState(''); // GPT's response
+  const [responseMessage, setResponseMessage] = useState(''); 
+  const [errorMessage, setErrorMessage] = useState(''); // New state for error messages
 
   const handleSendMessage = async () => {
-    if (!input) return; // If input is empty, do nothing
-    addMessage(input, user); // Add user's message to chat
-    setInput(''); // Clear the input
-
-    // Fetch response from API
+    if (!input) return;
     try {
+      await addMessage(input, user);
+      setInput('');
+
       const response = await fetch('/api/Completions', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({ message: input }),
-      })
+      });
+
       if (response.ok) {
         const data = await response.json();
         setResponseMessage(data.message);
-        addMessage(data.message, "gpt"); // Add GPT's response to chat
+        await addMessage(data.message, "gpt");
       } else {
         console.error('Unexpected response from server:', await response.json());
       }
     } catch (error) {
       console.error('Error sending message:', error);
+      setErrorMessage('Error sending message, please try again later.');
     }
   };
 
   return (
-    <div>
-      <responseMessage>{responseMessage}</responseMessage>
+    <>
+      {errorMessage && <div style={{ color: 'red' }}>{errorMessage}</div>}
+      <div>{responseMessage}</div>
       {messages.map((message, index) => (
-        <p key={index}>{message.text}</p>
+      <p key={message.createdAt + index}>{message.text}</p>  
       ))}
+
       <div>
         <Input 
           value={input} 
@@ -82,7 +86,7 @@ const ChatComponent = ({ sessionId }) => {
         />
         <Button onClick={handleSendMessage}>Send Message</Button>
       </div>
-    </div>
+    </>
   );
 };
 

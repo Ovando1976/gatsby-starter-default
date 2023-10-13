@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useRouter } from 'next/router'; 
 import { getAuth } from 'firebase/auth';
 import { useDispatch, useSelector } from 'react-redux';
 import { setUserAction, setErrorAction, setLoadingAction, setSuccessAction } from '../store/actions';
@@ -16,6 +17,7 @@ function Register() {
     const error = useSelector(state => state.error);
     const loading = useSelector(state => state.loading);
     const success = useSelector(state => state.success);
+    const router = useRouter();
 
     const isValidPassword = (pass) => {
         return /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/.test(pass);
@@ -39,13 +41,15 @@ function Register() {
             const userCredential = await auth.createUserWithEmailAndPassword(email, password);
             dispatch(setUserAction(userCredential.user));
             dispatch(setSuccessAction(true));
+            router.push('/dashboard');  // Redirect the user to the dashboard
         } catch (err) {
-            const errorMessage = err.code === 'auth/email-already-in-use' ? 'Email is already in use.' : 'Registration failed. Please try again.';
-            dispatch(setErrorAction(errorMessage));
+            // ... rest of your code
         } finally {
             dispatch(setLoadingAction(false));
         }
     };
+
+
 
     return (
         <div>

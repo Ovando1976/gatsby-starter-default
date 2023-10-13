@@ -1,12 +1,9 @@
+// eslint-disable-next-line no-unused-vars
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, getAuth } from 'firebase/auth';
-// Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
+// eslint-disable-next-line no-unused-vars
 import { getAnalytics } from "firebase/analytics";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
 
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
   apiKey: "AIzaSyB_gYJPNSFP6fd9Tvo0Tlc_IDvjCOwU2As",
   authDomain: "polished-leaf-592.firebaseapp.com",
