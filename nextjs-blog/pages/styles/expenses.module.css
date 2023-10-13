@@ -1,0 +1,54 @@
+.container {
+    inline-size: 100%;
+    max-inline-size: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+    background-color: #f7f7f7;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+  
+  .heading {
+    font-size: 1.5em;
+    margin-block-end: 20px;
+    color: #333;
+    text-align: center;
+  }
+  
+  .captureSection {
+    margin-block-end: 20px;
+  }
+  
+  .captureSection label {
+    font-weight: bold;
+    display: block;
+    margin-block-end: 10px;
+  }
+  
+  .receiptImage {
+    inline-size: 100%;
+    max-block-size: 400px;
+    object-fit: cover;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    margin-block-start: 20px;
+  }
+  
+  .expenseDetails {
+    margin-block-start: 30px;
+    border-block-start: 1px solid #e1e1e1;
+    padding-block-start: 20px;
+  }
+  
+  .expenseDetails h2 {
+    font-size: 1.3em;
+    margin-block-end: 15px;
+  }
+  
+  .expenseDetails p {
+    font-size: 1em;
+    color: #666;
+    line-height: 1.5;
+  }
+  
