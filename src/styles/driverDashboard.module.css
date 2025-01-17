@@ -1,0 +1,110 @@
+.container {
+  background: linear-gradient(135deg, #111, #333);
+  color: #f4e04d;
+  font-family: "Press Start 2P";
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.9);
+}
+
+.content {
+  max-width: 800px;
+  text-align: center;
+  padding: 20px;
+  border: 4px solid #f4e04d;
+  border-radius: 10px;
+  background: rgba(0, 0, 0, 0.8);
+  overflow-y: auto;
+}
+
+.gtaTitle {
+  font-size: 2.5rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 20px;
+  color: #ff5733;
+  text-shadow: 3px 3px 8px rgba(255, 87, 51, 0.8);
+}
+
+.error {
+  color: #ff3e3e;
+  font-weight: bold;
+}
+
+.loading {
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.buttonsContainer {
+  margin-top: 20px;
+}
+
+.prevPageBtn,
+.nextPageBtn {
+  background-color: #ff5733;
+  color: #fff;
+}
+
+.prevPageBtn:hover,
+.nextPageBtn:hover {
+  background-color: #ff8c33;
+}
+
+.mapContainer {
+  height: 60vh;
+  width: 100%;
+  margin-top: 20px;
+}
+
+.driverProfileContainer {
+  display: flex;
+  flex-direction: column;
+}
+
+.licenseCard {
+  display: flex;
+  margin-bottom: 20px;
+}
+
+.details {
+  margin-left: 20px;
+  max-height: 350px;
+  overflow-y: auto;
+}
+
+.map {
+  height: 100%; 
+  width: 100%;
+}
+
+.leaflet-container {
+  border-radius: 10px !important;
+  will-change: transform;
+}
+
+.leaflet-popup-content {
+  font-size: 1rem;
+  color: #333;
+  padding: 10px;
+}
+
+.leaflet-marker-icon {
+  background-color: #ff5733 !important;
+  border-radius: 50%;
+  border: 2px solid #fff;
+  width: 40px;
+  height: 40px;
+}
+
+.leaflet-popup-tip {
+  border-top-color: #ff5733 !important;
+}
+
+.leaflet-popup-content-wrapper {
+  border-radius: 10px !important;
+  background-color: #f9f9f9;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}

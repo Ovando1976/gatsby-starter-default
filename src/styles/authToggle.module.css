@@ -1,0 +1,25 @@
+/* src/styles/authToggle.module.css */
+
+.authToggleContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .toggleText {
+    margin-top: 1rem;
+    font-size: 0.9rem;
+  }
+  
+  .toggleButton {
+    background: none;
+    border: none;
+    color: #0070f3;
+    cursor: pointer;
+    text-decoration: underline;
+    font-size: 0.9rem;
+  }
+  
+  .toggleButton:hover {
+    color: #005bb5;
+  }

@@ -1,0 +1,214 @@
+/* General Container */
+.container {
+  padding: 20px;
+  max-width: 800px;
+  margin: 0 auto;
+  font-family: "Cabin", Arial, sans-serif; /* A modern font with a relaxed vibe */
+  background: linear-gradient(135deg, #87CEEB, #FFD700); /* Sky blue to sunshine yellow */
+  color: #006400; /* Deep green */
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+  box-sizing: border-box;
+  min-height: 100vh;
+  border-radius: 12px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+}
+
+/* Section Titles */
+.h1, .h2 {
+  text-align: center;
+  font-size: 2rem;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+  color: #FF4500; /* Vibrant orange */
+  text-shadow: 2px 2px 6px rgba(255, 69, 0, 0.7);
+  font-weight: bold;
+}
+
+/* Restaurant Buttons */
+.restaurants {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.restaurantButton {
+  padding: 12px 20px;
+  margin: 10px;
+  border: none;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #FFA07A, #FF6347); /* Light salmon to tomato */
+  color: white;
+  font-size: 1.1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s ease;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.restaurantButton:hover {
+  background: linear-gradient(135deg, #FF6347, #FFA07A); /* Reverse gradient */
+  transform: scale(1.1);
+}
+
+.restaurantButton.selected {
+  background: #20B2AA; /* Sea green */
+  font-weight: bold;
+}
+
+/* Menu Section */
+.menu {
+  margin-top: 20px;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.8);
+  border: 4px solid #FFD700; /* Gold border */
+  border-radius: 12px;
+  color: #006400;
+  text-align: center;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+}
+
+.menuItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+  padding: 10px;
+  border-radius: 8px;
+  background: linear-gradient(135deg, #FFE4B5, #FFDAB9); /* Light pastel tones */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.menuItem:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+}
+
+.menuItem button {
+  padding: 10px 20px;
+  background: linear-gradient(135deg, #87CEEB, #4682B4); /* Sky blue to steel blue */
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.menuItem button:hover {
+  background: linear-gradient(135deg, #4682B4, #87CEEB); /* Reverse gradient */
+  transform: scale(1.05);
+}
+
+/* Cart Section */
+.cart {
+  margin-top: 20px;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.8);
+  border: 4px solid #FF8C00; /* Dark orange border */
+  border-radius: 12px;
+  color: #006400;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+}
+
+.cart ul {
+  list-style: none;
+  padding: 0;
+}
+
+.cart li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  margin-bottom: 10px;
+  background: linear-gradient(135deg, #FFDEAD, #FFE4B5); /* Pastel peach tones */
+  border-radius: 8px;
+}
+
+.cart li button {
+  padding: 10px 20px;
+  background: linear-gradient(135deg, #FF4500, #FF6347); /* Vibrant orange tones */
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.cart li button:hover {
+  background: linear-gradient(135deg, #FF6347, #FF4500); /* Reverse gradient */
+  transform: scale(1.05);
+}
+
+/* Order Form */
+.orderForm {
+  margin-top: 20px;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.8);
+  border: 4px solid #FFD700; /* Gold border */
+  border-radius: 12px;
+  color: #006400;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+}
+
+.orderForm input {
+  display: block;
+  margin-bottom: 10px;
+  padding: 10px;
+  width: 100%;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 1rem;
+}
+
+.orderForm button {
+  width: 100%;
+  padding: 12px;
+  background: linear-gradient(135deg, #32CD32, #228B22); /* Lime green to forest green */
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.orderForm button:hover {
+  background: linear-gradient(135deg, #228B22, #32CD32); /* Reverse gradient */
+  transform: scale(1.05);
+}
+
+/* Order Status Section */
+.orderStatus {
+  margin-top: 20px;
+  padding: 20px;
+  text-align: center;
+  background: rgba(255, 255, 255, 0.8);
+  border: 4px solid #FFD700; /* Gold border */
+  border-radius: 12px;
+  color: #006400;
+  font-size: 1.2rem;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .menuItem {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .menuItem button {
+    margin-top: 10px;
+  }
+
+  .cart li {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .cart li button {
+    margin-top: 10px;
+  }
+}

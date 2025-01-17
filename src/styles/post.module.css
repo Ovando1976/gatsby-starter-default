@@ -1,0 +1,48 @@
+/* src/styles/post.module.css */
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+    background-color: #f0f2f5;
+  }
+  
+  .post {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .postImage {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    margin-bottom: 20px;
+  }
+  
+  .postTitle {
+    font-size: 2rem;
+    margin-bottom: 10px;
+    color: #1877f2;
+  }
+  
+  .postDate {
+    font-size: 0.9rem;
+    color: #555;
+    margin-bottom: 20px;
+  }
+  
+  .postContent {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    color: #333;
+  }
+  
+  .notFound {
+    text-align: center;
+    padding: 50px;
+    font-size: 1.5rem;
+    color: #b71c1c;
+  }

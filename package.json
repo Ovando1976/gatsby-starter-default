@@ -1,0 +1,115 @@
+{
+  "name": "codespaces-react",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@firebase/storage": "^0.11.2",
+    "@google-cloud/shell": "^3.0.1",
+    "@nanostores/react": "github:ai/react",
+    "@radix-ui/react-alert-dialog": "^1.0.5",
+    "@radix-ui/react-dropdown-menu": "^2.0.6",
+    "@radix-ui/react-separator": "^1.0.3",
+    "@radix-ui/react-tooltip": "^1.0.7",
+    "@react-google-maps/api": "^2.20.5",
+    "@stripe/react-stripe-js": "^3.1.1",
+    "@stripe/stripe-js": "^5.5.0",
+    "@testing-library/jest-dom": "^5.16.5",
+    "@testing-library/react": "^13.4.0",
+    "@testing-library/user-event": "^14.4.3",
+    "ai": "^2.2.14",
+    "axios": "^1.5.1",
+    "browserify-zlib": "^0.2.0",
+    "buffer": "^6.0.3",
+    "class-variance-authority": "^0.7.0",
+    "classnames": "^2.5.1",
+    "clsx": "^2.1.1",
+    "cors": "^2.8.5",
+    "crypto-browserify": "^3.12.0",
+    "date-fns": "^4.1.0",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "firebase": "^11.1.0",
+    "firebase-admin": "^13.0.2",
+    "firebase-functions": "^6.2.0",
+    "firebaseui": "^6.1.0",
+    "gatsby-source-filesystem": "^5.14.0",
+    "gatsby-transformer-remark": "^6.14.0",
+    "gray-matter": "^4.0.3",
+    "helmet": "^8.0.0",
+    "html2canvas": "^1.4.1",
+    "jspdf": "^2.5.2",
+    "leaflet": "^1.9.4",
+    "multer": "^1.4.5-lts.1",
+    "nanoid": "^5.0.8",
+    "next-auth": "^4.24.11",
+    "next-themes": "^0.4.3",
+    "openai": "^4.11.1",
+    "path-browserify": "^1.0.1",
+    "prop-types": "^15.8.1",
+    "querystring-es3": "^0.2.1",
+    "quill": "^2.0.3",
+    "react-feather": "^2.0.10",
+    "react-hot-toast": "^2.4.1",
+    "react-intersection-observer": "^9.5.2",
+    "react-leaflet": "^4.2.1",
+    "react-markdown": "^9.0.0",
+    "react-quill": "^2.0.0",
+    "react-redux": "^9.2.0",
+    "react-router": "^6.16.0",
+    "react-syntax-highlighter": "^15.5.0",
+    "react-textarea-autosize": "^8.5.3",
+    "react-toastify": "^11.0.2",
+    "redux": "^5.0.1",
+    "remark-gfm": "^4.0.0",
+    "remark-math": "^6.0.0",
+    "stream-browserify": "^3.0.0",
+    "stripe": "^17.5.0",
+    "tailwind-merge": "^1.14.0",
+    "url": "^0.11.3",
+    "util": "^0.12.5",
+    "web-vitals": "^3.1.0",
+    "ws": "^8.18.0"
+  },
+  "overrides": {
+    "@svgr/webpack": "^8.0.1",
+    "@adobe/css-tools": "^4.3.1"
+  },
+  "scripts": {
+    "backend": "node server.js",
+    "start": "next start",
+    "dev": "next dev -H 0.0.0.0 -p 3000",
+    "build": "next build",
+    "test": "next test",
+    "eject": "next eject"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
+    "autoprefixer": "^10.4.20",
+    "eslint": "^8.57.1",
+    "eslint-config-react-app": "^7.0.1",
+    "gatsby-plugin-postcss": "^6.14.0",
+    "postcss": "^8.5.1",
+    "tailwindcss": "^3.4.17"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

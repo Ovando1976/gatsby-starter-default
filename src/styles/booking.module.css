@@ -1,0 +1,76 @@
+/* Container */
+.container {
+    max-width: 400px;
+    margin: auto;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+    background-color: #f9fafb;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Title */
+  .title {
+    font-family: Arial, sans-serif;
+    color: #0d9488;
+  }
+  
+
+  .title h2{
+    margin-bottom: 0.5rem;
+  }
+  
+  /* Form */
+  .form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .formGroup {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .formGroup label {
+    font-size: 1rem;
+    color: #333;
+    margin-bottom: 0.5rem;
+  }
+  
+  .formGroup input,
+  .formGroup select {
+    padding: 0.75rem;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 1rem;
+  }
+  
+  /* Buttons */
+  .button {
+    padding: 0.75rem 1.5rem;
+    background-color: #0d9488;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+  }
+  
+  .button:hover {
+    background-color: #3b82f6;
+  }
+  
+  .button:disabled {
+    background-color: #93c5fd;
+    cursor: not-allowed;
+  }
+  
+  /* Fare Estimate */
+  .fareEstimate {
+    text-align: center;
+    font-size: 1.25rem;
+    font-weight: bold;
+    color: #2563eb;
+  }

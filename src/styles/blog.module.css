@@ -1,0 +1,155 @@
+/* Main container */
+.container {
+  font-family: Arial, sans-serif;
+  color: #333;
+  background-color: #f9fafb;
+  min-height: 100vh;
+  padding: 2rem;
+}
+
+/* Layout */
+.layout {
+  display: flex;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+/* Sidebar */
+.sidebar,
+.rightSidebar {
+  width: 250px;
+  background-color: white;
+  padding: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.sidebar h2,
+.rightSidebar h2 {
+  font-size: 1.25rem;
+  margin-bottom: 1rem;
+}
+
+.sidebarItem {
+  padding: 0.75rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  border-radius: 4px;
+}
+
+.sidebarItem:hover {
+  background-color: #f0f0f0;
+}
+
+/* Main Content */
+.mainContent {
+  flex: 1;
+  min-width: 400px;
+}
+
+/* Upload Form */
+.uploadForm {
+  margin-bottom: 2rem;
+  background-color: white;
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.input,
+.textarea,
+.fileInput {
+  display: block;
+  width: 100%;
+  margin-bottom: 1rem;
+  padding: 0.75rem;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 1rem;
+}
+
+.textarea {
+  resize: vertical;
+  min-height: 120px;
+}
+
+.submitButton {
+  background-color: #0d9488;
+  color: white;
+  border: none;
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+  width: 100%;
+}
+
+.submitButton:hover {
+  background-color: #3b82f6;
+}
+
+/* Posts Section */
+.postsSection {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.postCard {
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  padding: 1rem;
+  display: flex;
+  gap: 1rem;
+  flex-direction: column;
+}
+
+.postImage {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+.postContent {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.postContent h3 {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: bold;
+}
+
+.postContent p {
+  margin: 0.5rem 0;
+  color: #6b7280;
+}
+
+.postContent span {
+  color: #9ca3af;
+  font-size: 0.875rem;
+}
+
+.readMoreLink {
+  color: #0d9488;
+  text-decoration: none;
+  font-weight: bold;
+  margin-top: 0.5rem;
+  transition: color 0.3s ease;
+}
+
+.readMoreLink:hover {
+  color: #3b82f6;
+}
+
+/* Error messages */
+.error {
+  color: red;
+  font-size: 0.875rem;
+  margin-top: 1rem;
+}

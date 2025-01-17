@@ -1,0 +1,129 @@
+/* header.module.css */
+
+/* Main navbar container with a gradient background */
+.navbar {
+  width: 100%;
+  /* Example gradient: from teal (#0d9488) to blue (#3b82f6) */
+  background: linear-gradient(90deg, #0d9488 0%, #3b82f6 100%);
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  border-bottom: 1px solid #eaeaea; /* optional */
+  /* Consider darker text if your gradient is bright: color: #fff; */
+}
+
+/* Inner nav layout: flex row */
+.navInner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  padding: 0.75rem 1rem; /* vertical horizontal spacing */
+  justify-content: space-between;
+  /* If the gradient is bright, ensure text stands out: */
+  color: #fff;
+}
+
+/* Brand or logo area */
+.brandSection {
+  display: flex;
+  align-items: center;
+}
+.brandLink {
+  text-decoration: none;
+  color: inherit;
+}
+.brandText {
+  font-size: 1.25rem;
+  font-weight: bold;
+}
+
+/* Nav link container */
+.linksContainer {
+  display: flex;
+  gap: 1rem;
+}
+
+/* Individual nav links */
+.linkItem {
+  text-decoration: none;
+  color: inherit;
+  font-weight: 500;
+  padding: 0.25rem 0.5rem;
+  transition: color 0.2s ease-in-out;
+}
+.linkItem:hover {
+  color: #d1d5db; /* a lighter shade on hover, or #fff if you want more contrast */
+}
+
+/* Right side for user controls */
+.rightSide {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+/* User dropdown trigger */
+.userButton {
+  position: relative;
+  cursor: pointer;
+  padding: 0.25rem 0.5rem;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+.userButton:hover {
+  color: #d1d5db;
+}
+
+/* The dropdown menu container */
+.dropdownMenu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: #fff;       /* white for contrast */
+  min-width: 150px;
+  border: 1px solid #eaeaea;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  border-radius: 4px;
+  margin-top: 0.5rem;
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  color: #333;                 /* dark text on white bg */
+  /* z-index: 100; if needed */
+}
+.dropdownOpen {
+  opacity: 1;
+  transform: translateY(0px);
+  pointer-events: auto;
+}
+.dropdownClosed {
+  pointer-events: none;
+}
+
+/* The clickable items inside dropdown */
+.dropdownItem {
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  color: #333;
+  font-weight: 400;
+  transition: background-color 0.2s ease;
+}
+.dropdownItem:hover {
+  background-color: #f8f8f8;
+}
+
+/* Guest icon styling */
+.guestIcon {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+.guestIcon:hover {
+  opacity: 0.9;
+}
+
+/* Nav icon for dark mode toggling */
+.navIcon {
+  cursor: pointer;
+}

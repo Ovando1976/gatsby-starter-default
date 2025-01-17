@@ -1,0 +1,75 @@
+/* dashboard.module.css */
+
+/* Overall container for the page */
+.container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: #f9fafb;
+  color: #333;
+  font-family: sans-serif;
+}
+
+/* Main content area in the center */
+.main {
+  flex: 1;
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+  text-align: center;
+}
+
+/* Page header (H1) */
+.header {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  color: #0f172a;
+}
+
+/* Container for links (User, Blog, etc.) */
+.linksContainer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
+  margin: 1rem 0;
+}
+
+/* Style for the login button */
+.loginBtn {
+  background-color: #0d9488; /* Teal */
+  color: #fff;
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 4px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.loginBtn:hover {
+  background-color: #3b82f6; /* Blue on hover */
+}
+
+/* Cards container: displays FloatingCards in a grid */
+.cardsContainer {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+/* Error text styling if no pages/data */
+.error {
+  color: red;
+  font-weight: 500;
+  margin: 1rem 0;
+}
+
+/* Footer section at the bottom */
+.footer {
+  background-color: #444;
+  color: #fff;
+  text-align: center;
+  padding: 1rem;
+}
