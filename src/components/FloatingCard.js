@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from './FloatingCard.module.css';
+import './FloatingCard.module.css';
 
 function FloatingCard({ avatarSrc, title, description }) {
     return (

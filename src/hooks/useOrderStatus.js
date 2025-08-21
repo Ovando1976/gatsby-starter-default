@@ -1,8 +1,8 @@
 // src/hooks/useOrderStatus.js
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { doc, getDoc, onSnapshot, updateDoc } from 'firebase/firestore';
-import { db } from '../firebaseConfig';
-import { useAuth } from '../contexts/AuthContext';
+import { db } from '../../firebaseConfig';
+import { useAuth } from "../hooks/useAuth";
 
 /**
  * A hook that manages real-time order status logic.

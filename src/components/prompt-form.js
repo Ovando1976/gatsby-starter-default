@@ -1,50 +1,56 @@
-import * as React from 'react';
-import { NavLink } from 'react-router-dom';
-import Textarea from 'react-textarea-autosize';
-import { useEnterSubmit } from '../lib/Hooks/use-enter-to-submit';
-import { cn } from '../lib/utils';
-import { Button } from './ui/button';
-import { Tooltip, TooltipContent, TooltipTrigger } from './ui/tooltip';
-import { IconArrowElbow, IconPlus } from './ui/icons';
+import React from "react";
+// Replace NavLink with Gatsby's Link
+import { Link } from "gatsby"
+import Textarea from "react-textarea-autosize"
+
+import { useEnterSubmit } from "../lib/Hooks/use-enter-to-submit"
+import { cn } from "../lib/utils"
+import { Button } from "./ui/button"
+import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip"
+import { IconArrowElbow, IconPlus } from "./ui/icons"
 
 export function PromptForm({ onSubmit, input, setInput, isLoading }) {
-  const { formRef } = useEnterSubmit();
-  const inputRef = React.useRef(null);
+  const { formRef } = useEnterSubmit()
+  const inputRef = React.useRef(null)
 
   React.useEffect(() => {
     if (inputRef.current) {
-      inputRef.current.focus();
+      inputRef.current.focus()
     }
-  }, []);
+  }, [])
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
+    e.preventDefault()
     if (!input?.trim()) {
-      return;
+      return
     }
-    setInput('');
-    await onSubmit(input);
-  };
+    // Clear input locally
+    setInput("")
+    // Call parent onSubmit
+    await onSubmit(input)
+  }
 
   return (
-    <div className={cn('prompt-form-container')}>
-      <NavLink to="/">
+    <div className={cn("prompt-form-container")}>
+      {/* Replaced NavLink with Gatsby <Link to="/"> */}
+      <Link to="/">
         <Tooltip>
           <TooltipTrigger asChild>
             <IconPlus />
           </TooltipTrigger>
           <TooltipContent>New Chat</TooltipContent>
         </Tooltip>
-      </NavLink>
+      </Link>
+
       <form onSubmit={handleSubmit} ref={formRef}>
         <Textarea
           ref={inputRef}
           tabIndex={0}
           value={input}
-          onChange={e => setInput(e.target.value)}
+          onChange={(e) => setInput(e.target.value)}
           placeholder="Send a message."
           spellCheck={false}
-          className={cn('textarea-class')}
+          className={cn("textarea-class")}
         />
         <div className="action-buttons">
           <Tooltip>
@@ -52,7 +58,7 @@ export function PromptForm({ onSubmit, input, setInput, isLoading }) {
               <Button
                 type="submit"
                 size="icon"
-                disabled={isLoading || input === ''}
+                disabled={isLoading || input === ""}
               >
                 <IconArrowElbow />
               </Button>
@@ -62,5 +68,7 @@ export function PromptForm({ onSubmit, input, setInput, isLoading }) {
         </div>
       </form>
     </div>
-  );
+  )
 }
+
+export default PromptForm

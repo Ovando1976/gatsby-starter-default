@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@firebase/storage": "^0.11.2",
+    "@firebasegen/default-connector": "link:dataconnect-generated/js/default-connector",
     "@google-cloud/shell": "^3.0.1",
     "@nanostores/react": "github:ai/react",
     "@radix-ui/react-alert-dialog": "^1.0.5",
@@ -18,6 +19,7 @@
     "@testing-library/user-event": "^14.4.3",
     "ai": "^2.2.14",
     "axios": "^1.5.1",
+    "babel-runtime": "^6.26.0",
     "browserify-zlib": "^0.2.0",
     "buffer": "^6.0.3",
     "class-variance-authority": "^0.7.0",
@@ -28,11 +30,14 @@
     "date-fns": "^4.1.0",
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
-    "firebase": "^11.1.0",
+    "firebase": "^11.4.0",
     "firebase-admin": "^13.0.2",
     "firebase-functions": "^6.2.0",
     "firebaseui": "^6.1.0",
+    "gatsby": "^5.14.1",
+    "gatsby-plugin-image": "^3.14.0",
     "gatsby-source-filesystem": "^5.14.0",
+    "gatsby-source-firestore": "^1.0.3",
     "gatsby-transformer-remark": "^6.14.0",
     "gray-matter": "^4.0.3",
     "helmet": "^8.0.0",
@@ -48,8 +53,12 @@
     "prop-types": "^15.8.1",
     "querystring-es3": "^0.2.1",
     "quill": "^2.0.3",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0",
     "react-feather": "^2.0.10",
+    "react-helmet": "^6.1.0",
     "react-hot-toast": "^2.4.1",
+    "react-icons": "^5.4.0",
     "react-intersection-observer": "^9.5.2",
     "react-leaflet": "^4.2.1",
     "react-markdown": "^9.0.0",
@@ -62,6 +71,7 @@
     "redux": "^5.0.1",
     "remark-gfm": "^4.0.0",
     "remark-math": "^6.0.0",
+    "simple-peer": "^9.11.1",
     "stream-browserify": "^3.0.0",
     "stripe": "^17.5.0",
     "tailwind-merge": "^1.14.0",
@@ -75,12 +85,14 @@
     "@adobe/css-tools": "^4.3.1"
   },
   "scripts": {
+    "develop": "gatsby develop",
+    "build": "gatsby build",
+    "serve": "gatsby serve",
     "backend": "node server.js",
-    "start": "next start",
-    "dev": "next dev -H 0.0.0.0 -p 3000",
-    "build": "next build",
-    "test": "next test",
-    "eject": "next eject"
+    "seed:msgs": "node scripts/seedMessages.js",
+    "seed:msgs:lounge": "node scripts/seedMessages.js lounge 10",
+    "seed:rooms": "node scripts/seedRooms.js",
+    "seed:room": "node scripts/seedRooms.js"
   },
   "eslintConfig": {
     "extends": [
@@ -103,10 +115,14 @@
   "devDependencies": {
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "autoprefixer": "^10.4.20",
-    "eslint": "^8.57.1",
+    "eslint": "^9.18.0",
+    "eslint-config-prettier": "^10.0.1",
     "eslint-config-react-app": "^7.0.1",
+    "eslint-plugin-prettier": "^5.2.3",
     "gatsby-plugin-postcss": "^6.14.0",
+    "node-polyfill-webpack-plugin": "^4.1.0",
     "postcss": "^8.5.1",
+    "prettier": "^3.4.2",
     "tailwindcss": "^3.4.17"
   },
   "engines": {

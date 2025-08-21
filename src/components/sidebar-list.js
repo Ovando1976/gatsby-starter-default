@@ -1,64 +1,67 @@
-'use client';
+import React from "react"
+import { Link } from "gatsby"
+import { useLocation } from "@reach/router"
+import styles from "../pages/styles/Home.module.css" // Adjust if needed
+import sidebarLinks from "../data/sidebarLinks"
+import { useAuth } from "../hooks/useAuth"
 
-import { useState, useEffect } from 'react';
-import { getChats, removeChat, shareChat } from '../../store/actions';
-import { SidebarActions } from './sidebar-actions';
-import { SidebarItem } from './sidebar-item';
+export default function SidebarNavigation() {
+  // For active link detection
+  const location = useLocation()
 
-export default function SidebarList({ userId }) {
-  const [chats, setChats] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const { user } = useAuth()
+  const userRole = user?.role
 
-  useEffect(() => {
-    const fetchChats = async () => {
-      try {
-        const data = await getChats(userId);
-        setChats(data);
-      } catch (err) {
-        console.error("Error fetching chats:", err); // Log the error
-        setError(err); 
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    fetchChats();
-  }, [userId]); // Re-fetch if userId changes
-
-  if (isLoading) {
-    return <div className="p-8 text-center">Loading chats...</div>;
+  function hasAccess(linkRoles) {
+    if (!linkRoles) return true // no role requirement
+    return linkRoles.includes(userRole)
   }
 
-  if (error) {
-    return (
-      <div className="p-8 text-center">
-        <p className="text-sm text-muted-foreground">Error loading chats</p>
-      </div>
-    );
+  /**
+   * Opens an external link in a new tab for external URLs.
+   */
+  function handleExternalLink(url) {
+    window.open(url, "_blank", "noopener,noreferrer")
   }
 
   return (
-    <div className="flex-1 overflow-auto">
-      {chats?.length ? (
-        <div className="space-y-2 px-2">
-          {chats.map(chat => ( 
-            <SidebarItem key={chat?.id ?? 'default-key'} chat={chat}> 
-              {chat.path && chat.title && ( // Check for required properties
-                <SidebarActions
-                  chat={chat}
-                  removeChat={removeChat}
-                  shareChat={shareChat}
-                />
-              )}
-            </SidebarItem>
-          ))}
-        </div>
-      ) : (
-        <div className="p-8 text-center">
-          <p className="text-sm text-muted-foreground">No chats found.</p> 
-        </div>
-      )}
-    </div>
-  );
+    <ul className={styles.sidebarList}>
+      {sidebarLinks.map((link) => {
+        if (!hasAccess(link.roles)) return null
+
+        // Check if this link is active by comparing location.pathname to link.path
+        const isActive = location.pathname === link.path
+
+        if (link.external) {
+          // For external links
+          return (
+            <li key={link.path}>
+              <button
+                onClick={() => handleExternalLink(link.path)}
+                className={`${styles.sidebarButton} ${
+                  isActive ? styles.activeLink : ""
+                }`}
+              >
+                {link.label}
+              </button>
+            </li>
+          )
+        }
+
+        // Internal Gatsby link
+        return (
+          <li key={link.path}>
+            <Link
+              to={link.path}
+              className={`${styles.sidebarButton} ${
+                isActive ? styles.activeLink : ""
+              }`}
+            >
+              {link.label}
+            </Link>
+          </li>
+        )
+      })}
+    </ul>
+  )
 }

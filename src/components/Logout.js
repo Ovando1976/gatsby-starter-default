@@ -1,8 +1,8 @@
 // components/Logout.js
 
 import React, { useState } from "react";
-import { useAuth } from "../../contexts/AuthContext";
-import styles from "../styles/logout.module.css";
+import { useAuth } from "../hooks/useAuth"; // Adjust the import path as necessary
+import "../styles/logout.module.css";
 
 const Logout = () => {
   const { logout } = useAuth();

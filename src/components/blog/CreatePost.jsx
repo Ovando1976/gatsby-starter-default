@@ -1,108 +1,111 @@
-import React, { useState, useRef } from "react";
-import dynamic from "next/dynamic";
-import { toast } from "react-toastify";
-import axios from "axios"; // Use axios for API calls
+import React, { useState, useRef, lazy, Suspense } from "react"
+import { toast } from "react-toastify"
+import axios from "axios"
 
-import { useAuth } from "../../../contexts/AuthProvider";
-import styles from "../../styles/blog.module.css";
+// Adjust this path for your actual AuthProvider location
+import { useAuth } from "../../hooks/useAuth";
 
-// Dynamically import ReactQuill so SSR doesn't break
-const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
+// Adjust if your CSS file is truly at this path in your Gatsby project
+import "../../styles/blog.module.css"
 
-function CreatePost({ defaultCategory = "Technology" }) {
-  const { user } = useAuth();
+// Instead of next/dynamic, use React’s lazy+Suspense for code-splitting:
+const ReactQuill = typeof window !== "undefined" ? lazy(() => import("react-quill")) : () => null
 
-  const [title, setTitle] = useState("");
-  const [excerpt, setExcerpt] = useState("");
-  const [content, setContent] = useState("");
-  const [category, setCategory] = useState(defaultCategory);
-  const [image, setImage] = useState(null);
-  const [uploading, setUploading] = useState(false);
-  const [error, setError] = useState("");
+export default function CreatePost({ defaultCategory = "Technology" }) {
+  const { user } = useAuth()
 
-  // Refs for focusing on error
-  const titleRef = useRef(null);
-  const excerptRef = useRef(null);
+  const [title, setTitle] = useState("")
+  const [excerpt, setExcerpt] = useState("")
+  const [content, setContent] = useState("")
+  const [category, setCategory] = useState(defaultCategory)
+  const [image, setImage] = useState(null)
+  const [uploading, setUploading] = useState(false)
+  const [error, setError] = useState("")
+
+  const titleRef = useRef(null)
+  const excerptRef = useRef(null)
 
   const resetForm = () => {
-    setTitle("");
-    setExcerpt("");
-    setContent("");
-    setCategory(defaultCategory);
-    setImage(null);
-  };
+    setTitle("")
+    setExcerpt("")
+    setContent("")
+    setCategory(defaultCategory)
+    setImage(null)
+  }
 
   const handleSubmit = async (event) => {
-    event.preventDefault();
+    event.preventDefault()
+
     if (!user) {
-      setError("You must be signed in to create a post.");
-      return;
+      setError("You must be signed in to create a post.")
+      return
     }
 
     if (!title.trim() || !excerpt.trim() || !content.trim()) {
-      setError("Please fill out all text fields.");
-      if (!title.trim()) titleRef.current && titleRef.current.focus();
-      else if (!excerpt.trim()) excerptRef.current && excerptRef.current.focus();
-      return;
+      setError("Please fill out all text fields.")
+      if (!title.trim()) titleRef.current?.focus()
+      else if (!excerpt.trim()) excerptRef.current?.focus()
+      return
     }
 
     if (title.length > 100) {
-      setError("Title should not exceed 100 characters.");
-      titleRef.current && titleRef.current.focus();
-      return;
+      setError("Title should not exceed 100 characters.")
+      titleRef.current?.focus()
+      return
     }
 
     if (excerpt.length > 300) {
-      setError("Excerpt should not exceed 300 characters.");
-      excerptRef.current && excerptRef.current.focus();
-      return;
+      setError("Excerpt should not exceed 300 characters.")
+      excerptRef.current?.focus()
+      return
     }
 
-    setUploading(true);
-    setError("");
+    setUploading(true)
+    setError("")
 
     try {
-      let imageUrl = null;
+      let imageUrl = null
 
-      // Upload the image to the backend if provided
+      // If you’re using Gatsby env vars, rename to process.env.GATSBY_API_URL
+      // e.g. const baseApiUrl = process.env.GATSBY_API_URL
+      // Or keep as is if you prefer that naming:
+      const baseApiUrl = process.env.GATSBY_API_URL || process.env.NEXT_PUBLIC_API_URL
+
+      // Upload image if provided
       if (image) {
-        const formData = new FormData();
-        formData.append("file", image);
-        formData.append("upload_preset", "blogImages");
+        const formData = new FormData()
+        formData.append("file", image)
+        formData.append("upload_preset", "blogImages")
 
         const imageRes = await axios.post(
-          `${process.env.NEXT_PUBLIC_API_URL}/api/uploadImage`,
+          `${baseApiUrl}/api/uploadImage`,
           formData
-        );
-
-        imageUrl = imageRes.data.url;
+        )
+        imageUrl = imageRes.data.url
       }
 
       // Send post data to the backend
-      const postRes = await axios.post(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/createPost`,
-        {
-          title: title.trim(),
-          excerpt: excerpt.trim(),
-          content,
-          category,
-          imageUrl,
-          authorId: user.uid,
-        }
-      );
+      const postRes = await axios.post(`${baseApiUrl}/api/createPost`, {
+        title: title.trim(),
+        excerpt: excerpt.trim(),
+        content,
+        category,
+        imageUrl,
+        authorId: user.uid,
+      })
 
       if (postRes.status === 201) {
-        toast.success("Blog post added successfully!");
-        resetForm();
+        toast.success("Blog post added successfully!")
+        resetForm()
       }
     } catch (err) {
-      console.error("Error uploading blog post:", err);
-      setError("Failed to upload blog post. Please try again.");
-      toast.error("Failed to upload blog post. Please try again.");
+      console.error("Error uploading blog post:", err)
+      setError("Failed to upload blog post. Please try again.")
+      toast.error("Failed to upload blog post. Please try again.")
     } finally {
-      setUploading(false);
+      setUploading(false)
     }
-  };
+  }
 
   // Quill modules
   const quillModules = {
@@ -113,7 +116,7 @@ function CreatePost({ defaultCategory = "Technology" }) {
       ["link", "image"],
       [{ align: [] }],
     ],
-  };
+  }
 
   // Quill formats
   const quillFormats = [
@@ -127,12 +130,13 @@ function CreatePost({ defaultCategory = "Technology" }) {
     "link",
     "image",
     "align",
-  ];
+  ]
 
   return (
     <section className={styles.uploadForm}>
       <h2>Create a New Post</h2>
       {error && <p className={styles.error}>{error}</p>}
+
       <form onSubmit={handleSubmit} className={styles.form}>
         {/* TITLE */}
         <div className={styles.formGroup}>
@@ -166,13 +170,16 @@ function CreatePost({ defaultCategory = "Technology" }) {
         {/* CONTENT (Rich Text Editor) */}
         <div className={styles.formGroup}>
           <label htmlFor="content">Content:</label>
-          <ReactQuill
-            value={content}
-            onChange={setContent}
-            modules={quillModules}
-            formats={quillFormats}
-            theme="snow"
-          />
+          {/* ReactQuill loaded lazily via Suspense */}
+          <Suspense fallback={<p>Loading Editor...</p>}>
+            <ReactQuill
+              value={content}
+              onChange={setContent}
+              modules={quillModules}
+              formats={quillFormats}
+              theme="snow"
+            />
+          </Suspense>
         </div>
 
         {/* CATEGORY */}
@@ -208,7 +215,5 @@ function CreatePost({ defaultCategory = "Technology" }) {
         </button>
       </form>
     </section>
-  );
+  )
 }
-
-export default CreatePost;

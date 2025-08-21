@@ -1,5 +1,8 @@
 {
   "projects": {
-    "default": "polished-leaf-592"
-  }
+    "default": "polished-leaf-592",
+    "staging": "get2work-57bc6"
+  },
+  "targets": {},
+  "etags": {}
 }

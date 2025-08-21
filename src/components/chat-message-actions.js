@@ -1,5 +1,5 @@
 'use client'
-
+import React from "react";
 import { Button } from './ui/button'
 import { IconCheck, IconCopy } from './ui/icons'
 import { useCopyToClipboard } from '../lib/Hooks/use-to-copy-to-clipboard'

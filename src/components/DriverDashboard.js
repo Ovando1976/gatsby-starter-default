@@ -9,8 +9,8 @@ import {
   updateDoc
 } from "firebase/firestore";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
-import app from "../firebaseConfig";
-import styles from "./driverDashboard.module.css";
+import app from "../../firebaseConfig";
+import  "./driverDashboard.module.css";
 
 /** 1. Mock dataset (inline) */
 const mockDrivers = [

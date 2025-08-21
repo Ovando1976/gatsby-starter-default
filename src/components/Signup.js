@@ -1,8 +1,8 @@
 // components/Signup.js
 
-import { useState } from "react";
-import { useAuth } from "../../contexts/AuthContext";
-import styles from "../styles/auth.module.css";
+import React, { useState } from "react";
+import { useAuth } from "../hooks/useAuth";
+import "../styles/auth.module.css";
 
 const Signup = () => {
   const { register } = useAuth();

@@ -1,9 +1,7 @@
-'use client';
-
-import * as React from 'react';
-import { useRouter } from 'next/router'; // Importing useRouter from Next.js
-import { toast } from 'react-hot-toast';
-import { Button } from './ui/button';
+import React from "react";
+import { navigate } from "gatsby"              // Use Gatsby's navigate
+import { toast } from "react-hot-toast"
+import { Button } from "./ui/button"
 import {
   AlertDialog,
   AlertDialogAction,
@@ -14,13 +12,12 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
-} from './ui/alert-dialog';
-import { IconSpinner } from './ui/icons';
+} from "./ui/alert-dialog"
+import { IconSpinner } from "./ui/icons"
 
 export function ClearHistory({ clearChats }) {
-  const [open, setOpen] = React.useState(false);
-  const [isPending, startTransition] = React.useTransition();
-  const router = useRouter(); // Using useRouter instead of useNavigate
+  const [open, setOpen] = React.useState(false)
+  const [isPending, startTransition] = React.useTransition()
 
   return (
     <AlertDialog open={open} onOpenChange={setOpen}>
@@ -42,19 +39,20 @@ export function ClearHistory({ clearChats }) {
           <AlertDialogCancel disabled={isPending}>Cancel</AlertDialogCancel>
           <AlertDialogAction
             disabled={isPending}
-            onClick={event => {
-              event.preventDefault();
+            onClick={(event) => {
+              event.preventDefault()
               startTransition(async () => {
-                const result = await clearChats();
+                const result = await clearChats()
 
-                if (result && 'error' in result) {
-                  toast.error(result.error);
-                  return;
+                if (result && "error" in result) {
+                  toast.error(result.error)
+                  return
                 }
 
-                setOpen(false);
-                router.push('/'); // Use navigate instead of history.push or router.push
-              });
+                setOpen(false)
+                // Instead of router.push("/")
+                navigate("/") // Programmatic navigation in Gatsby
+              })
             }}
           >
             {isPending && <IconSpinner className="mr-2 animate-spin" />}
@@ -63,5 +61,7 @@ export function ClearHistory({ clearChats }) {
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>
-  );
+  )
 }
+
+export default ClearHistory

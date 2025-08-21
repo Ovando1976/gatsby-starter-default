@@ -1,10 +1,7 @@
-"use client";
-
-import * as React from "react";
-import { useRouter } from "next/router";
-import Link from "next/link";
-import { toast } from "react-hot-toast";
-import { cn, formatDate } from "../../lib/utils";
+import React from "react";
+import { Link, navigate } from "gatsby"
+import { toast } from "react-hot-toast"
+import { cn, formatDate } from "../../lib/utils"
 
 // UI components
 import {
@@ -16,8 +13,8 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-} from "./ui/alert-dialog";
-import { Button } from "./ui/button";
+} from "./ui/alert-dialog"
+import { Button } from "./ui/button"
 import {
   Dialog,
   DialogContent,
@@ -25,20 +22,10 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from "./ui/dialog";
-import {
-  IconShare,
-  IconSpinner,
-  IconTrash,
-  IconUsers,
-} from "./ui/icons";
-import { badgeVariants } from "./ui/badge";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-  TooltipProvider,
-} from "./ui/tooltip";
+} from "./ui/dialog"
+import { IconShare, IconSpinner, IconTrash, IconUsers } from "./ui/icons"
+import { badgeVariants } from "./ui/badge"
+import { Tooltip, TooltipContent, TooltipTrigger, TooltipProvider } from "./ui/tooltip"
 
 // A small sub-component for your delete confirmation dialog
 const DeleteAlertDialog = ({
@@ -52,7 +39,8 @@ const DeleteAlertDialog = ({
       <AlertDialogHeader>
         <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
         <AlertDialogDescription>
-          This will permanently delete your chat message and remove your data from our servers.
+          This will permanently delete your chat message and remove your data
+          from our servers.
         </AlertDialogDescription>
       </AlertDialogHeader>
       <AlertDialogFooter>
@@ -66,50 +54,49 @@ const DeleteAlertDialog = ({
       </AlertDialogFooter>
     </AlertDialogContent>
   </AlertDialog>
-);
+)
 
 export function SidebarActions({ chat, removeChat, shareChat }) {
-  const [deleteDialogOpen, setDeleteDialogOpen] = React.useState(false);
-  const [shareDialogOpen, setShareDialogOpen] = React.useState(false);
+  const [deleteDialogOpen, setDeleteDialogOpen] = React.useState(false)
+  const [shareDialogOpen, setShareDialogOpen] = React.useState(false)
 
   // React 18 concurrency hooks:
-  const [isRemovePending, startRemoveTransition] = React.useTransition();
-  const [isSharePending, startShareTransition] = React.useTransition();
+  const [isRemovePending, startRemoveTransition] = React.useTransition()
+  const [isSharePending, startShareTransition] = React.useTransition()
 
-  const router = useRouter();
+  // Instead of `useRouter()` from Next.js, use Gatsby's `navigate()`
+  // for programmatic navigation (navigate("/"), etc.)
 
   // Copies the chat's share link to the clipboard
-  const copyShareLink = React.useCallback(
-    async (chatToShare) => {
-      if (!chatToShare.sharePath) {
-        toast.error("Could not copy share link to clipboard");
-        return;
-      }
+  const copyShareLink = React.useCallback(async (chatToShare) => {
+    if (!chatToShare.sharePath) {
+      toast.error("Could not copy share link to clipboard")
+      return
+    }
 
-      const url = new URL(window.location.href);
-      url.pathname = chatToShare.sharePath;
-      await navigator.clipboard.writeText(url.toString());
+    const url = new URL(window.location.href)
+    url.pathname = chatToShare.sharePath
+    await navigator.clipboard.writeText(url.toString())
 
-      setShareDialogOpen(false);
-      toast.success("Share link copied to clipboard");
-    },
-    []
-  );
+    setShareDialogOpen(false)
+    toast.success("Share link copied to clipboard")
+  }, [])
 
   // Called when the user confirms deletion
   const onDeleteConfirm = async () => {
     startRemoveTransition(async () => {
-      const result = await removeChat({ id: chat.id, path: chat.path });
+      const result = await removeChat({ id: chat.id, path: chat.path })
       if (result && "error" in result) {
-        toast.error(result.error);
-        return;
+        toast.error(result.error)
+        return
       }
 
-      setDeleteDialogOpen(false);
-      router.push("/");
-      toast.success("Chat deleted");
-    });
-  };
+      setDeleteDialogOpen(false)
+      // Instead of router.push("/")
+      navigate("/")
+      toast.success("Chat deleted")
+    })
+  }
 
   return (
     <TooltipProvider>
@@ -165,14 +152,18 @@ export function SidebarActions({ chat, removeChat, shareChat }) {
 
           <DialogFooter className="items-center">
             {chat.sharePath && (
-              <Link
+              // For a sharePath, consider whether it is an internal or external link:
+              // If external, use a standard <a> with target="_blank"
+              // If internal, use <Link to={chat.sharePath} />
+              <a
                 href={chat.sharePath}
                 className={cn(badgeVariants({ variant: "secondary" }), "mr-auto")}
                 target="_blank"
+                rel="noopener noreferrer"
               >
                 <IconUsers className="mr-2" />
                 {chat.sharePath}
-              </Link>
+              </a>
             )}
             <Button
               disabled={isSharePending}
@@ -181,21 +172,21 @@ export function SidebarActions({ chat, removeChat, shareChat }) {
                   // If there's already a sharePath, just copy it
                   if (chat.sharePath) {
                     // small delay for demonstration
-                    await new Promise((resolve) => setTimeout(resolve, 500));
-                    copyShareLink(chat);
-                    return;
+                    await new Promise((resolve) => setTimeout(resolve, 500))
+                    copyShareLink(chat)
+                    return
                   }
 
                   // Otherwise, call shareChat to create a new share link
-                  const result = await shareChat(chat);
+                  const result = await shareChat(chat)
                   if (result && "error" in result) {
-                    toast.error(result.error);
-                    return;
+                    toast.error(result.error)
+                    return
                   }
 
                   // Then copy the new share link from the result
-                  copyShareLink(result);
-                });
+                  copyShareLink(result)
+                })
               }}
             >
               {isSharePending ? (
@@ -219,7 +210,7 @@ export function SidebarActions({ chat, removeChat, shareChat }) {
         onDeleteConfirm={onDeleteConfirm}
       />
     </TooltipProvider>
-  );
+  )
 }
 
-export default SidebarActions;
+export default SidebarActions

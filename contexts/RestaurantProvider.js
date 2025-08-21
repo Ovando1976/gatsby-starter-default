@@ -1,7 +1,11 @@
 // contexts/RestaurantContext.js
 import React, { createContext, useState, useEffect, useContext } from "react";
-import { db } from "../firebaseConfig";
 import { collection, getDocs } from "firebase/firestore";
+import { getFirebaseAuth, getFirebaseFirestore, getFirebaseStorage } from "../firebaseConfig";
+
+const auth = getFirebaseAuth();
+const db = getFirebaseFirestore();
+const storage = getFirebaseStorage();
 
 const RestaurantContext = createContext();
 

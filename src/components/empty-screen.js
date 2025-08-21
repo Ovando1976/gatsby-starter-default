@@ -1,3 +1,4 @@
+import React from "react";
 import { Button } from './ui/button'
 import { ExternalLink } from '../external-link'
 import { IconArrowRight } from './ui/icons'

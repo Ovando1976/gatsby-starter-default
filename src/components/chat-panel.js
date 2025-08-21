@@ -1,3 +1,4 @@
+import React from "react";
 import { Button } from './ui/button'
 import { PromptForm } from '../prompt-form'
 import { ButtonScrollToBottom } from './button-scroll-to-bottom'

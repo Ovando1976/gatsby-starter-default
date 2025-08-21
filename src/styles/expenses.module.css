@@ -1,98 +1,96 @@
-/* expenses.module.css */
-
 .container {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 2rem;
-    font-family: Arial, sans-serif;
-    background-color: #f9fafb;
-    color: #333;
-  }
-  
-  /* Header */
-  h1 {
-    text-align: center;
-    color: #0d9488;
-    margin-bottom: 2rem;
-  }
-  
-  /* Capture Receipt Section */
-  .captureSection {
-    margin-bottom: 2rem;
-    text-align: center;
-  }
-  
-  input[type="file"] {
-    margin-top: 1rem;
-  }
-  
-  /* Receipt Preview */
-  .imagePreview {
-    margin-top: 1rem;
-    text-align: center;
-  }
-  
-  .receiptImage {
-    max-width: 100%;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    margin-bottom: 1rem;
-  }
-  
-  /* Add Manual Expense */
-  .addExpenseSection {
-    margin: 2rem 0;
-    text-align: center;
-  }
-  
-  .inputField {
-    margin: 0.5rem;
-    padding: 0.5rem;
-    width: 200px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-  }
-  
-  .addButton {
-    padding: 0.5rem 1rem;
-    background-color: #0d9488;
-    color: #fff;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-  
-  .addButton:hover {
-    background-color: #3b82f6;
-  }
-  
-  /* Expense List */
-  .expenseList {
-    margin-top: 2rem;
-  }
-  
-  .expensesTable {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 1rem;
-  }
-  
-  .expensesTable th,
-  .expensesTable td {
-    border: 1px solid #ddd;
-    padding: 0.75rem;
-    text-align: left;
-  }
-  
-  .expensesTable th {
-    background-color: #f3f4f6;
-  }
-  
-  /* Total Section */
-  .totalSection {
-    margin-top: 2rem;
-    text-align: center;
-    font-size: 1.25rem;
-    font-weight: bold;
-    color: #0d9488;
-  }
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem;
+  font-family: Arial, sans-serif;
+  background-color: #f9fafb;
+  color: #333;
+}
+
+/* Header */
+h1 {
+  text-align: center;
+  color: #0d9488;
+  margin-bottom: 2rem;
+}
+
+/* Capture Receipt Section */
+.captureSection {
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+input[type="file"] {
+  margin-top: 1rem;
+}
+
+/* Receipt Preview */
+.imagePreview {
+  margin-top: 1rem;
+  text-align: center;
+}
+
+.receiptImage {
+  max-width: 100%;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+}
+
+/* Add Manual Expense */
+.addExpenseSection {
+  margin: 2rem 0;
+  text-align: center;
+}
+
+.inputField {
+  margin: 0.5rem;
+  padding: 0.5rem;
+  width: 200px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.addButton {
+  padding: 0.5rem 1rem;
+  background-color: #0d9488;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.addButton:hover {
+  background-color: #3b82f6;
+}
+
+/* Expense List */
+.expenseList {
+  margin-top: 2rem;
+}
+
+.expensesTable {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+}
+
+.expensesTable th,
+.expensesTable td {
+  border: 1px solid #ddd;
+  padding: 0.75rem;
+  text-align: left;
+}
+
+.expensesTable th {
+  background-color: #f3f4f6;
+}
+
+/* Total Section */
+.totalSection {
+  margin-top: 2rem;
+  text-align: center;
+  font-size: 1.25rem;
+  font-weight: bold;
+  color: #0d9488;
+}

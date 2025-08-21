@@ -1,32 +1,41 @@
-import { doc, runTransaction } from 'firebase/firestore';
-import { db } from '../../firebaseConfig';
+import { doc, runTransaction } from "firebase/firestore";
+import { getFirebaseFirestore } from "../../firebaseConfig";
 
-/**
- * Accepts a booking by a "driver." 
- * This would normally be triggered in a driver’s dashboard context.
- */
 export default async function acceptBooking(bookingId, user) {
-  if (!user) {
+  if (!user || !user.uid) {
     throw new Error("You must be signed in as a driver to accept a booking.");
   }
-  const bookingRef = doc(db, 'bookings', bookingId);
 
-  await runTransaction(db, async (transaction) => {
-    const bookingSnap = await transaction.get(bookingRef);
-    if (!bookingSnap.exists()) {
-      throw new Error("Booking no longer exists!");
-    }
+  // Ensure Firebase Firestore is initialized correctly
+  const db = getFirebaseFirestore();
+  const bookingRef = doc(db, "bookings", bookingId);
 
-    const bookingData = bookingSnap.data();
-    if (bookingData.status !== 'SearchingDriver' || bookingData.driverId) {
-      throw new Error("Booking already assigned to another driver!");
-    }
+  try {
+    const result = await runTransaction(db, async (transaction) => {
+      const bookingSnap = await transaction.get(bookingRef);
+      if (!bookingSnap.exists()) {
+        throw new Error("Booking no longer exists!");
+      }
 
-    // Assign the driver
-    transaction.update(bookingRef, {
-      driverId: user.uid,
-      status: 'DriverAssigned',
-      rideStatus: 'DriverAssigned',
+      const bookingData = bookingSnap.data();
+      if (bookingData.status !== "SearchingDriver" || bookingData.driverId) {
+        throw new Error("Booking already assigned to another driver!");
+      }
+
+      // Assign the driver
+      transaction.update(bookingRef, {
+        driverId: user.uid,
+        status: "DriverAssigned",
+        rideStatus: "DriverAssigned",
+      });
+
+      return { success: true, driverId: user.uid };
     });
-  });
+
+    console.log(`🚗 Booking ${bookingId} accepted by Driver: ${user.uid}`);
+    return result;
+  } catch (error) {
+    console.error("🔥 Error accepting booking:", error.message);
+    return { success: false, error: error.message };
+  }
 }

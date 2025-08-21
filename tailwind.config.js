@@ -1,15 +1,16 @@
 // tailwind.config.js
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-    darkMode: "class", // Enable dark mode via a class
-    content: [
-      "./pages/**/*.{js,ts,jsx,tsx}",
-      "./components/**/*.{js,ts,jsx,tsx}",
-      "./hooks/**/*.{js,ts,jsx,tsx}",
-      "./store/**/*.{js,ts,jsx,tsx}",
-    ],
-    theme: {
-      extend: {},
-    },
-    plugins: [],
-  };
+  darkMode: "class", // or 'media'
+  content: [
+    "./src/pages/**/*.{js,jsx,ts,tsx}",
+    "./src/components/**/*.{js,jsx,ts,tsx}",
+    "./src/hooks/**/*.{js,jsx,ts,tsx}",
+    "./src/store/**/*.{js,jsx,ts,tsx}",
+    // Or just "./src/**/*.{js,jsx,ts,tsx}" if you want to capture everything under src
+  ],
+  theme: {
+    extend: {},
+  },
+  plugins: [],
+};

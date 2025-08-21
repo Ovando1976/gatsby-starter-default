@@ -1,120 +1,111 @@
-// src/hooks/useAuth.js
+import React, { useState, useEffect, createContext, useContext } from "react";
+import { navigate } from "gatsby";
+import {
+  onAuthStateChanged,
+  signInWithEmailAndPassword,
+  createUserWithEmailAndPassword,
+  signOut,
+  updateProfile,
+} from "firebase/auth";
+import {
+  doc,
+  getDoc,
+  setDoc,
+  updateDoc,
+} from "firebase/firestore";
+import {
+  ref,
+  uploadBytes,
+  getDownloadURL,
+} from "firebase/storage";
+import {
+  getFirebaseAuth,
+  getFirebaseFirestore,
+  getFirebaseStorage,
+} from "../../firebaseConfig";
 
-import { useState, useEffect, createContext, useContext } from "react"
-import { auth, firestore, storage } from "../firebaseConfig"
+const AuthContext = createContext(undefined);
 
-// Create a Context for Authentication
-const AuthContext = createContext()
-
-// AuthProvider Component to wrap the app and provide auth state
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null)
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState(null)
+  const auth = getFirebaseAuth();
+  const db = getFirebaseFirestore();
+  const storage = getFirebaseStorage();
 
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  // Monitor auth state
   useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged(async (firebaseUser) => {
-      if (firebaseUser) {
-        // Fetch additional user data from Firestore if available
-        try {
-          const userDoc = await firestore.collection("users").doc(firebaseUser.uid).get()
-          if (userDoc.exists) {
-            setUser({ uid: firebaseUser.uid, email: firebaseUser.email, ...userDoc.data() })
+    if (!auth) return;
+
+    const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
+      try {
+        if (firebaseUser) {
+          const userDoc = await getDoc(doc(db, "users", firebaseUser.uid));
+          if (userDoc.exists()) {
+            setUser({ uid: firebaseUser.uid, email: firebaseUser.email, ...userDoc.data() });
           } else {
-            setUser({ uid: firebaseUser.uid, email: firebaseUser.email })
+            setUser({ uid: firebaseUser.uid, email: firebaseUser.email });
           }
-        } catch (err) {
-          console.error("Error fetching user data:", err)
-          setError(err)
+        } else {
+          setUser(null);
         }
-      } else {
-        setUser(null)
+      } catch (err) {
+        console.error("Error fetching user data:", err);
+        setError(err);
+      } finally {
+        setLoading(false);
       }
-      setLoading(false)
-    })
+    });
 
-    // Cleanup subscription on unmount
-    return () => unsubscribe()
-  }, [])
+    return unsubscribe;
+  }, [auth, db]);
 
-  // Login method
-  const login = async (email, password) => {
-    setLoading(true)
-    setError(null)
-    try {
-      await auth.signInWithEmailAndPassword(email, password)
-    } catch (err) {
-      console.error("Login error:", err)
-      setError(err)
-    }
-    setLoading(false)
-  }
+  // Auth actions
+  const login = (email, password) => signInWithEmailAndPassword(auth, email, password);
 
-  // Sign Up method
   const signUp = async (email, password, displayName) => {
-    setLoading(true)
-    setError(null)
-    try {
-      const userCredential = await auth.createUserWithEmailAndPassword(email, password)
-      const firebaseUser = userCredential.user
-      // Set displayName in Firebase Auth
-      await firebaseUser.updateProfile({ displayName })
-      // Create a user document in Firestore
-      await firestore.collection("users").doc(firebaseUser.uid).set({
-        displayName,
-        email,
-        avatar: "", // Placeholder for avatar URL
-      })
-      setUser({ uid: firebaseUser.uid, email: firebaseUser.email, displayName, avatar: "" })
-    } catch (err) {
-      console.error("Sign Up error:", err)
-      setError(err)
-    }
-    setLoading(false)
-  }
+    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+    const firebaseUser = userCredential.user;
+    await updateProfile(firebaseUser, { displayName });
+    await setDoc(doc(db, "users", firebaseUser.uid), {
+      displayName,
+      email,
+      avatar: "",
+    });
+    setUser({ uid: firebaseUser.uid, email, displayName, avatar: "" });
+  };
 
-  // Logout method
-  const logoutUser = async () => {
-    setLoading(true)
-    setError(null)
-    try {
-      await auth.signOut()
-      setUser(null)
-    } catch (err) {
-      console.error("Logout error:", err)
-      setError(err)
-    }
-    setLoading(false)
-  }
+  const logoutUser = () => signOut(auth);
 
-  // Upload Avatar
   const uploadAvatar = async (file) => {
-    if (!user) return
-    setLoading(true)
-    setError(null)
-    try {
-      const storageRef = storage.ref().child(`avatars/${user.uid}`)
-      await storageRef.put(file)
-      const avatarURL = await storageRef.getDownloadURL()
-      // Update Firestore user document
-      await firestore.collection("users").doc(user.uid).update({ avatar: avatarURL })
-      // Update user state
-      setUser({ ...user, avatar: avatarURL })
-    } catch (err) {
-      console.error("Upload Avatar error:", err)
-      setError(err)
-    }
-    setLoading(false)
-  }
+    if (!user) return;
+    const storageRef = ref(storage, `avatars/${user.uid}`);
+    await uploadBytes(storageRef, file);
+    const avatarURL = await getDownloadURL(storageRef);
+    await updateDoc(doc(db, "users", user.uid), { avatar: avatarURL });
+    setUser({ ...user, avatar: avatarURL });
+  };
 
-  return (
-    <AuthContext.Provider value={{ user, loading, error, login, signUp, logout: logoutUser, uploadAvatar }}>
-      {children}
-    </AuthContext.Provider>
-  )
-}
+  const value = {
+    user,
+    loading,
+    error,
+    login,
+    signUp,
+    logout: logoutUser,
+    uploadAvatar,
+    isAuthenticated: !!user,
+    isLoading: loading,
+    loginWithRedirect: () => navigate("/login"),
+  };
 
-// Custom hook to use auth context
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
+};
+
 export const useAuth = () => {
-  return useContext(AuthContext)
-}
+  const ctx = useContext(AuthContext);
+  if (!ctx) throw new Error("useAuth must be used within <AuthProvider>.");
+  return ctx;
+};

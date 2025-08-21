@@ -1,0 +1,153 @@
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // =========================================
+    // EXISTING LOGIC
+    // =========================================
+
+    // Each user can only read/write their own doc
+    match /users/{userId} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+    }
+
+    // Authenticated users can read/write testCollection
+    match /testCollection/{document} {
+      allow read, write: if request.auth != null;
+    }
+
+    // Posts Collection
+    match /posts/{postId} {
+      // Public can read posts
+      allow read: if true;
+      // Only authenticated users can create posts
+      allow create: if request.auth != null;
+      // Only post owner can update/delete
+      allow update, delete: if request.auth != null
+        && resource.data.authorId == request.auth.uid;
+    }
+
+    // Chats Collection
+    match /chats/{chatId} {
+      allow read, write: if request.auth != null;
+      match /messages/{messageId} {
+        allow read, write: if request.auth != null;
+      }
+    }
+
+    // Calls (WebRTC signaling)
+    match /calls/{callId} {
+      allow read, write: if request.auth != null;
+      match /candidates/{candidateId} {
+        allow read, write: if request.auth != null;
+      }
+    }
+
+    // Admin-only access
+    match /adminData/{document} {
+      allow read, write: if request.auth != null && request.auth.token.admin == true;
+    }
+
+    // =========================================
+    // NEW COLLECTIONS (PROJECT, TASKS, TEAMS, ETC.)
+    // =========================================
+
+    match /projects/{projectId} {
+      allow read, write: if true;  // Adjust permissions as needed
+    }
+
+    match /tasks/{taskId} {
+      allow read, write: if request.auth != null;
+    }
+
+    match /teamMembers/{teamMemberId} {
+      allow read, write: if request.auth != null;
+    }
+
+    match /schedules/{scheduleId} {
+      allow read, write: if request.auth != null;
+    }
+
+    // Meetings Collection
+    match /meetings/{meetingId} {
+      allow read, write: if request.auth != null;
+      match /messages/{messageId} {
+        allow read, write: if request.auth != null;
+      }
+    }
+
+    // User Settings: Each user can read/write only their own settings document
+    match /userSettings/{userId} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+    }
+
+    // Change Orders Collection
+    match /changeOrders/{changeOrderId} {
+      // Anyone authenticated can read
+      allow read: if request.auth != null;
+      // Only the signed-in user can create if they set their own UID as ownerUid
+      allow create: if request.auth != null
+        && request.resource.data.ownerUid == request.auth.uid;
+      // Update/delete only if user is the owner or has admin rights
+      allow update, delete: if request.auth != null
+        && (
+          resource.data.ownerUid == request.auth.uid
+          || request.auth.token.admin == true
+        );
+    }
+
+    // Agents Collection
+    match /agents/{agentId} {
+      allow read, write: if request.auth != null;
+      match /executions/{executionId} {
+        allow read, write: if request.auth != null;
+      }
+    }
+
+    // Transcripts Collection (UPDATED)
+    match /transcripts/{docId} {
+      // Only authenticated users can create
+      allow create: if request.auth != null;
+      // Only the user who owns the transcript can read/update/delete
+      allow read, update, delete: if request.auth != null
+        && resource.data.userId == request.auth.uid;
+    }
+
+    // =========================================
+    // 10) Restaurants Collection (NEW)
+    // =========================================
+
+    match /restaurants/{restaurantId} {
+      // Public read access: anyone can view restaurants
+      allow read: if true;
+      // Only authenticated users can create a restaurant document
+      allow create: if request.auth != null;
+      // Only the restaurant owner (creator) can update or delete the restaurant
+      allow update, delete: if request.auth != null
+        && resource.data.ownerUid == request.auth.uid;
+
+      // -----------------------------------------
+      // Subcollection: Menu Items for each restaurant
+      // -----------------------------------------
+      match /menu/{menuItemId} {
+        // Public read access to menu items
+        allow read: if true;
+        // Only the restaurant owner can create, update, or delete menu items
+        allow create, update, delete: if request.auth != null
+          && resource.data.ownerUid == request.auth.uid;
+      }
+
+      // -----------------------------------------
+      // Subcollection: Reviews for each restaurant
+      // -----------------------------------------
+      match /reviews/{reviewId} {
+        // Public can read reviews
+        allow read: if true;
+        // Any authenticated user can create a review
+        allow create: if request.auth != null;
+        // Only the review owner can update or delete their review
+        allow update, delete: if request.auth != null
+          && resource.data.userId == request.auth.uid;
+      }
+    }
+  }
+}

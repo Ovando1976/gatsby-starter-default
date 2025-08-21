@@ -1,3 +1,5 @@
+/* src/styles/blog.module.css */
+
 /* Main container */
 .container {
   font-family: Arial, sans-serif;
@@ -56,37 +58,22 @@
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 }
 
-.input,
-.textarea,
-.fileInput {
-  display: block;
-  width: 100%;
-  margin-bottom: 1rem;
-  padding: 0.75rem;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  font-size: 1rem;
+/* Example .form + .formGroup classes used by the CreatePost component */
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
 }
 
-.textarea {
-  resize: vertical;
-  min-height: 120px;
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
 }
 
-.submitButton {
-  background-color: #0d9488;
-  color: white;
-  border: none;
-  padding: 0.75rem 1rem;
-  border-radius: 8px;
-  cursor: pointer;
-  font-weight: bold;
-  transition: background-color 0.3s ease;
-  width: 100%;
-}
-
-.submitButton:hover {
-  background-color: #3b82f6;
+.error {
+  color: red;
+  margin-top: 0.5rem;
 }
 
 /* Posts Section */
@@ -145,11 +132,4 @@
 
 .readMoreLink:hover {
   color: #3b82f6;
-}
-
-/* Error messages */
-.error {
-  color: red;
-  font-size: 0.875rem;
-  margin-top: 1rem;
 }

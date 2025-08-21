@@ -1,7 +1,7 @@
 // src/components/Layout.js
 
-import React, { useState, useEffect } from "react";
-import { Link } from "gatsby";
+import React, { useState, useEffect } from "react"
+import { Link } from "gatsby"                // Gatsby Link instead of Next Link
 import {
   X,
   Home,
@@ -11,45 +11,46 @@ import {
   Menu,
   Sun,
   Moon,
-} from "react-feather";
-import { useAuth } from "../hooks/useAuth";
+} from "react-feather"
+import { useAuth } from "../hooks/useAuth";   // Your custom Auth hook
 
 export default function Layout({ children }) {
-  const [isOpen, setIsOpen] = useState(false);
-  const [darkMode, setDarkMode] = useState(false);
-  const { isAuthenticated, user, loginWithRedirect, logout, isLoading } = useAuth();
+  const [isOpen, setIsOpen] = useState(false)
+  const [darkMode, setDarkMode] = useState(false)
+  const { isAuthenticated, user, loginWithRedirect, logout, isLoading } = useAuth()
 
   // Toggle sidebar open/close
-  const handleToggle = () => setIsOpen(!isOpen);
+  const handleToggle = () => setIsOpen(!isOpen)
 
   // Toggle dark mode
   const toggleDarkMode = () => {
-    setDarkMode(!darkMode);
+    setDarkMode(!darkMode)
     if (typeof window !== "undefined") {
-      document.documentElement.classList.toggle("dark");
+      document.documentElement.classList.toggle("dark")
     }
-  };
+  }
 
-  // Persist dark mode preference
+  // Persist dark mode preference on mount
   useEffect(() => {
     if (typeof window !== "undefined") {
-      const storedTheme = localStorage.getItem("theme");
+      const storedTheme = localStorage.getItem("theme")
       if (storedTheme === "dark") {
-        setDarkMode(true);
-        document.documentElement.classList.add("dark");
+        setDarkMode(true)
+        document.documentElement.classList.add("dark")
       }
     }
-  }, []);
+  }, [])
 
+  // Update localStorage when darkMode changes
   useEffect(() => {
     if (typeof window !== "undefined") {
       if (darkMode) {
-        localStorage.setItem("theme", "dark");
+        localStorage.setItem("theme", "dark")
       } else {
-        localStorage.setItem("theme", "light");
+        localStorage.setItem("theme", "light")
       }
     }
-  }, [darkMode]);
+  }, [darkMode])
 
   return (
     <div className={darkMode ? "dark" : ""}>
@@ -127,7 +128,7 @@ export default function Layout({ children }) {
             )}
             {!isLoading && isAuthenticated && (
               <button
-                onClick={() => logout({ returnTo: window.location.origin })}
+                onClick={() => logout({ returnTo: typeof window !== "undefined" ? window.location.origin : "/" })}
                 className="mt-4 mx-6 px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600"
               >
                 Sign Out
@@ -167,5 +168,5 @@ export default function Layout({ children }) {
         </div>
       </div>
     </div>
-  );
+  )
 }

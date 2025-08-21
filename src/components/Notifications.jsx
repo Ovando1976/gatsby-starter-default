@@ -1,4 +1,5 @@
-import styles from '../../pages/Notifications.module.css';
+import React from "react";
+import '../pages/Notifications.module.css';
 
 export default function Notifications() { 
     return (

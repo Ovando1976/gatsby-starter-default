@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from '../../styles/blog.module.css';
+import '../../styles/blog.module.css';
 
 const CATEGORY_LIST = [
   'All',

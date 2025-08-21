@@ -1,6 +1,6 @@
 'use client'
 
-import * as React from 'react'
+import React from "react";
 import { useInView } from 'react-intersection-observer'
 
 import { useAtBottom } from '../lib/Hooks/use-at-bottom'

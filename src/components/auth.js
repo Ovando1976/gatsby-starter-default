@@ -1,4 +1,5 @@
 // auth.js
+import React from "react";
 import { getFirebaseAuth } from '../../firebaseConfig'; 
 import { signInWithEmailAndPassword, signOut } from 'firebase/auth';
 

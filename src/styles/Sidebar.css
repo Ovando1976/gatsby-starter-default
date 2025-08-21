@@ -1,0 +1,120 @@
+/* Sidebar.module.css */
+
+/* Sidebar container */
+.sidebar {
+  background-color: var(--card-bg-color);
+  width: 250px;
+  min-height: 100vh;
+  padding: 20px;
+  transition: width 0.3s ease-in-out;
+}
+
+.collapsed {
+  width: 80px;
+}
+
+.sidebarHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.sidebar h2 {
+  font-size: 1.5rem;
+  color: var(--text-color);
+}
+
+/* Collapse Button */
+.collapseBtn {
+  background-color: #333;
+  color: #fff;
+  border: none;
+  padding: 8px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+/* Navigation list */
+.navList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.navList li {
+  margin: 12px 0;
+}
+
+.navList li a {
+  color: var(--text-color);
+  text-decoration: none;
+  font-size: 1rem;
+}
+
+.navList li a:hover {
+  color: var(--button-bg-color);
+}
+
+/* Recent Messages Section */
+.recentMessages {
+  margin-top: 20px;
+}
+
+.recentMessages h3 {
+  font-size: 1rem;
+  margin-bottom: 10px;
+}
+
+.messageItem {
+  font-size: 14px;
+  margin-bottom: 8px;
+}
+
+.messageTime {
+  font-size: 12px;
+  color: gray;
+  float: right;
+}
+
+/* Contacts Section */
+.contacts {
+  margin-top: 20px;
+}
+
+.contacts h3 {
+  font-size: 1rem;
+  margin-bottom: 10px;
+}
+
+.contactItem {
+  font-size: 14px;
+  margin-bottom: 8px;
+}
+
+.online {
+  color: green;
+}
+
+.offline {
+  color: red;
+}
+
+/* Theme Toggle */
+.themeToggle {
+  margin-top: 20px;
+}
+
+.themeBtn {
+  background-color: var(--button-bg-color);
+  color: var(--button-text-color);
+  border: none;
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  width: 100%;
+  text-align: center;
+}
+
+.themeBtn:hover {
+  background-color: #4500b0;
+}

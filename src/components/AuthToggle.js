@@ -1,9 +1,9 @@
 // components/AuthToggle.js
 
-import { useState } from "react";
+import React,{ useState } from "react";
 import Login from "./Login";
 import Signup from "./Signup";
-import styles from "../styles/authToggle.module.css";
+import "../styles/authToggle.module.css";
 
 const AuthToggle = () => {
   const [isLogin, setIsLogin] = useState(true);

@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from '../styles/booking.module.css';
-import { useAuth } from '../../contexts/AuthContext';
+import { useAuth } from "../hooks/useAuth";
 
 // Our new custom hook
 import useBooking from '../hooks/useBooking';

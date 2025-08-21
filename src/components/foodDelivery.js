@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { db } from "./firebaseConfig"; // Import Firestore instance
+import { db } from "../../firebaseConfig"; // Import Firestore instance
 import { collection, getDocs } from "firebase/firestore";
 import styles from "./styles/foodDelivery.module.css";
 

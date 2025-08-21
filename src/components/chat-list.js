@@ -1,3 +1,4 @@
+import React from "react";
 import { useEffect, useState } from 'react';
 import { Separator } from './ui/separator';
 import { ChatMessage } from '../chat-message';

@@ -1,6 +1,8 @@
-import React from 'react';
-import Link from 'next/link';
-import styles from '../../../pages/styles/blog.module.css';
+import React from "react"
+// Replace next/link with Gatsby's Link
+import { Link } from "gatsby"
+
+import "../../styles/blog.module.css"
 
 function TrendingPosts({ trending }) {
   return (
@@ -10,7 +12,8 @@ function TrendingPosts({ trending }) {
         {trending && trending.length > 0 ? (
           trending.map((post) => (
             <li key={post.id} className={styles.sidebarItem}>
-              <Link href={`/posts/${post.id}`} className={styles.trendingLink}>
+              {/* Replace href= with to= for Gatsby */}
+              <Link to={`/posts/${post.id}`} className={styles.trendingLink}>
                 {post.title}
               </Link>
             </li>
@@ -20,7 +23,7 @@ function TrendingPosts({ trending }) {
         )}
       </ul>
     </div>
-  );
+  )
 }
 
-export default TrendingPosts;
+export default TrendingPosts

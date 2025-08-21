@@ -1,68 +1,67 @@
-// src/components/SidebarNavigation.js
-
-import React from 'react';
-import Link from 'next/link';
-import { useRouter } from 'next/router';
-import styles from '../../pages/styles/Home.module.css';
-import sidebarLinks from '../data/sidebarLinks';
-import { useAuth } from '../../contexts/AuthProvider';
+import React from "react"
+import { Link } from "gatsby"        
+import { useLocation } from "@reach/router"  
+import * as styles from "../styles/Home.module.css" // Adjust path if needed
+import sidebarLinks from "../data/sidebarLinks"
+import { useAuth } from "../hooks/useAuth"
 
 export default function SidebarNavigation() {
-  const router = useRouter();
-  const { user } = useAuth();
-  const userRole = user?.role;
+  // Instead of router, use @reach/router's location
+  const location = useLocation()
+  const { user } = useAuth()
+  const userRole = user?.role
 
   function hasAccess(linkRoles) {
-    if (!linkRoles) return true; // no role requirement
-    return linkRoles.includes(userRole);
+    if (!linkRoles) return true // no role requirement
+    return linkRoles.includes(userRole)
   }
 
   /**
    * Opens an external link in a new tab without using <a>.
-   * You could also do router.push if it’s internal,
-   * but for external, window.open is straightforward.
+   * For internal links, we use <Link to="/..."/>.
    */
   function handleExternalLink(url) {
-    window.open(url, '_blank', 'noopener,noreferrer');
+    window.open(url, "_blank", "noopener,noreferrer")
   }
 
   return (
     <ul className={styles.sidebarList}>
       {sidebarLinks.map((link) => {
-        if (!hasAccess(link.roles)) return null;
+        if (!hasAccess(link.roles)) return null
 
-        const isActive = router.pathname === link.path;
+        // Compare location.pathname with link.path
+        const isActive = location.pathname === link.path
 
         if (link.external) {
-          // For external links: use a button with onClick
+          // For external links: use a button + onClick
           return (
             <li key={link.path}>
               <button
                 onClick={() => handleExternalLink(link.path)}
                 className={`${styles.sidebarButton} ${
-                  isActive ? styles.activeLink : ''
+                  isActive ? styles.activeLink : ""
                 }`}
               >
                 {link.label}
               </button>
             </li>
-          );
+          )
         }
 
-        // Internal link: Use Next.js Link without <a>
+        // Internal link: Use Gatsby <Link to="/...">
         return (
           <li key={link.path}>
             <Link
-              href={link.path}
+              to={link.path}
               className={`${styles.sidebarButton} ${
-                isActive ? styles.activeLink : ''
+                isActive ? styles.activeLink : ""
               }`}
             >
               {link.label}
             </Link>
           </li>
-        );
+        )
       })}
     </ul>
-  );
+  )
 }

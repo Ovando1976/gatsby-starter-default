@@ -1,7 +1,7 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
 import { db } from '../../firebaseConfig';
-import { useAuth } from '../../contexts/AuthContext';
+import { useAuth } from "./hooks/useAuth";
 
 // Utility functions
 import calculateRealDistance from '../utils/calculateRealDistance';

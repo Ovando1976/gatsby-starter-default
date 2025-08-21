@@ -1,0 +1,22 @@
+/* src/styles/liveFeed.module.css */
+
+.container {
+    width: 100vw;
+    height: 100vh;
+    overflow-y: scroll;
+    scroll-snap-type: y mandatory;
+    /* Hide scroll bar if you want a pure swipe feel */
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  
+  .container::-webkit-scrollbar {
+    display: none;
+  }
+  
+  .videoContainer {
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+    scroll-snap-align: start;
+  }

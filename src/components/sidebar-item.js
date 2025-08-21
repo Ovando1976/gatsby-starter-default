@@ -1,25 +1,24 @@
-'use client';
+import React from "react"
+import { Link } from "gatsby"
+import { useLocation } from "@reach/router"
 
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
-
-import { cn } from '../../lib/utils';
-import { buttonVariants } from './ui/button';
-import { IconMessage, IconUsers } from './ui/icons';
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from './ui/tooltip';
+import { cn } from "../../lib/utils"
+import { buttonVariants } from "./ui/button"
+import { IconMessage, IconUsers } from "./ui/icons"
+import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip"
 
 export function SidebarItem({ chat, children }) {
-  const pathname = usePathname();
-  const isActive = pathname === chat.path;
+  // Replace next/navigation’s `usePathname` with `useLocation`
+  const location = useLocation()
+  const pathname = location?.pathname
 
-  if (!chat?.id) return null;
+  const isActive = pathname === chat?.path
+
+  if (!chat?.id) return null
 
   return (
     <div className="relative">
+      {/* Left icon area */}
       <div className="absolute left-2 top-1 flex h-6 w-6 items-center justify-center">
         {chat.sharePath ? (
           <Tooltip delayDuration={1000}>
@@ -35,12 +34,14 @@ export function SidebarItem({ chat, children }) {
           <IconMessage className="mr-2" />
         )}
       </div>
+
+      {/* Gatsby Link instead of Next.js Link */}
       <Link
-        href={chat.path}
+        to={chat.path}
         className={cn(
-          buttonVariants({ variant: 'ghost' }),
-          'group w-full pl-8 pr-16',
-          isActive && 'bg-accent'
+          buttonVariants({ variant: "ghost" }),
+          "group w-full pl-8 pr-16",
+          isActive && "bg-accent"
         )}
       >
         <div
@@ -50,7 +51,9 @@ export function SidebarItem({ chat, children }) {
           <span className="whitespace-nowrap">{chat.title}</span>
         </div>
       </Link>
+
+      {/* Right-side content if active */}
       {isActive && <div className="absolute right-2 top-1">{children}</div>}
     </div>
-  );
+  )
 }
