@@ -1,38 +1,33 @@
-# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
-# .gitignore
-
+# Secrets
 firebaseAdmin.js
 serviceAccountKey.json
 
-# dependencies
-/node_modules
-/.pnp
+# Environment files
+.env
+.env.*.local
+
+# Dependencies
+node_modules/
+.pnp
 .pnp.js
 
-# testing
-/coverage
+# Gatsby build outputs
+.cache/
+public/
 
-# next.js
-/.next/
-/out/
+# Next.js / other build outputs
+.next/
+out/
+build/
 
-# production
-/build
-
-# misc
+# Misc
 .DS_Store
+.vercel
 
-# debug
+# Logs
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-# local env files
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
-.vercel
-
-# dotenv environment variables file
-*.json
+# Testing
+coverage/
